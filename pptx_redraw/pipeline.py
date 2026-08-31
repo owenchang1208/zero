@@ -5,8 +5,10 @@ from __future__ import annotations
 from pathlib import Path
 
 from pptx import Presentation
+from pptx.dml.color import RGBColor
 from pptx.enum.shapes import MSO_AUTO_SHAPE_TYPE, MSO_CONNECTOR
 from pptx.util import Inches
+from pptx.util import Pt
 
 from pptx_redraw.models import ObjectiveItem, RoadmapQuarter, SectionCard, SlideContent
 from pptx_redraw.renderer import add_card, add_objective_icon, add_round_rect, add_textbox
@@ -173,15 +175,13 @@ def generate_pptx(output_path: Path) -> Path:
 
     bg = slide.background
     bg.fill.solid()
-    bg.fill.fore_color.rgb = __import__("pptx.dml.color", fromlist=["RGBColor"]).RGBColor(
-        BG.r, BG.g, BG.b
-    )
+    bg.fill.fore_color.rgb = RGBColor(BG.r, BG.g, BG.b)
 
     add_textbox(slide, 0.3, 0.1, 7.8, 0.35, content.title, size=20, bold=True, color=TITLE)
     add_textbox(slide, 0.3, 0.42, 5.8, 0.22, content.subtitle, size=11, color=MUTED)
     badge = add_round_rect(slide, 9.1, 0.12, 4.0, 0.42, fill=ACCENT_SOFT, line=ACCENT)
     badge.text_frame.text = content.badge
-    badge.text_frame.paragraphs[0].runs[0].font.size = Inches(0.12)
+    badge.text_frame.paragraphs[0].runs[0].font.size = Pt(9)
     badge.text_frame.paragraphs[0].runs[0].font.bold = True
 
     add_round_rect(slide, 0.3, 0.75, 3.15, 1.65, fill=PANEL, line=BORDER)
@@ -204,13 +204,13 @@ def generate_pptx(output_path: Path) -> Path:
         box = add_round_rect(slide, x, 0.91, 0.77, 0.28, fill=ACCENT_SOFT, line=BORDER)
         box.text_frame.text = item
         run = box.text_frame.paragraphs[0].runs[0]
-        run.font.size = Inches(0.1)
+        run.font.size = Pt(7)
 
     main = add_round_rect(slide, 3.7, 1.4, 5.85, 3.25, fill=PANEL, line=ACCENT, line_width=1.5)
     main.text_frame.text = "AegisOps 最小可實作架構 (MVP)"
     mr = main.text_frame.paragraphs[0].runs[0]
     mr.font.bold = True
-    mr.font.size = Inches(0.12)
+    mr.font.size = Pt(9)
 
     card_w, card_h = 2.75, 0.93
     start_x, start_y = 3.88, 1.82
@@ -251,14 +251,14 @@ def generate_pptx(output_path: Path) -> Path:
         p0 = tf.paragraphs[0]
         p0.text = quarter.quarter
         p0.runs[0].font.bold = True
-        p0.runs[0].font.size = Inches(0.1)
+        p0.runs[0].font.size = Pt(7)
         p1 = tf.add_paragraph()
         p1.text = quarter.summary
-        p1.runs[0].font.size = Inches(0.085)
+        p1.runs[0].font.size = Pt(6)
         for bullet in quarter.bullets:
             p = tf.add_paragraph()
             p.text = f"• {bullet}"
-            p.runs[0].font.size = Inches(0.075)
+            p.runs[0].font.size = Pt(5.5)
 
         if i < 3:
             arr = slide.shapes.add_shape(
@@ -269,9 +269,7 @@ def generate_pptx(output_path: Path) -> Path:
                 Inches(0.16),
             )
             arr.fill.solid()
-            arr.fill.fore_color.rgb = __import__("pptx.dml.color", fromlist=["RGBColor"]).RGBColor(
-                ACCENT.r, ACCENT.g, ACCENT.b
-            )
+            arr.fill.fore_color.rgb = RGBColor(ACCENT.r, ACCENT.g, ACCENT.b)
             arr.line.fill.background()
 
     add_round_rect(slide, 0.3, 6.5, 12.7, 0.78, fill=PANEL, line=BORDER)
@@ -290,17 +288,13 @@ def generate_pptx(output_path: Path) -> Path:
     c1 = slide.shapes.add_connector(
         MSO_CONNECTOR.STRAIGHT, Inches(3.42), Inches(1.55), Inches(3.68), Inches(1.55)
     )
-    c1.line.color.rgb = __import__("pptx.dml.color", fromlist=["RGBColor"]).RGBColor(
-        ACCENT.r, ACCENT.g, ACCENT.b
-    )
+    c1.line.color.rgb = RGBColor(ACCENT.r, ACCENT.g, ACCENT.b)
     c1.line.width = Inches(0.01)
 
     c2 = slide.shapes.add_connector(
         MSO_CONNECTOR.STRAIGHT, Inches(9.56), Inches(2.6), Inches(9.73), Inches(2.6)
     )
-    c2.line.color.rgb = __import__("pptx.dml.color", fromlist=["RGBColor"]).RGBColor(
-        ACCENT.r, ACCENT.g, ACCENT.b
-    )
+    c2.line.color.rgb = RGBColor(ACCENT.r, ACCENT.g, ACCENT.b)
     c2.line.width = Inches(0.01)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)

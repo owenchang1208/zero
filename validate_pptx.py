@@ -51,10 +51,10 @@ def validate_pptx(path: Path) -> None:
                 "Suspiciously high picture count; possible raster-image embedding"
             )
 
-    print("Validation passed")
-    print(f"- Editable shapes: {len(shapes)}")
-    print(f"- Text runs: {len(text_runs)}")
-    print(f"- Pictures: {len(pictures)}")
+        print("Validation passed")
+        print(f"- Editable shapes: {len(shapes)}")
+        print(f"- Text runs: {len(text_runs)}")
+        print(f"- Pictures: {len(pictures)}")
 
 
 if __name__ == "__main__":
