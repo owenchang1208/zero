@@ -8,7 +8,7 @@ from pptx.enum.text import PP_ALIGN
 from pptx.slide import Slide
 from pptx.util import Inches, Pt
 
-from pptx_redraw.theme import Color, TEXT, TITLE
+from pptx_redraw.theme import FONT_CJK, FONT_UI, Color, TEXT, TITLE
 
 
 def _rgb(color: Color) -> RGBColor:
@@ -112,7 +112,7 @@ def add_textbox(
     run.font.size = Pt(size)
     run.font.bold = bold
     run.font.color.rgb = _rgb(color)
-    run.font.name = "Microsoft JhengHei"
+    run.font.name = FONT_CJK
     return tb
 
 
@@ -160,7 +160,7 @@ def add_card(
     r0.font.size = Pt(11)
     r0.font.bold = True
     r0.font.color.rgb = _rgb(TITLE)
-    r0.font.name = "Microsoft JhengHei"
+    r0.font.name = FONT_CJK
 
     for bullet in bullets:
         p = tf.add_paragraph()
@@ -170,7 +170,7 @@ def add_card(
         r = p.runs[0]
         r.font.size = Pt(9)
         r.font.color.rgb = _rgb(TEXT)
-        r.font.name = "Microsoft JhengHei"
+        r.font.name = FONT_CJK
     return shape
 
 
@@ -207,6 +207,6 @@ def add_objective_icon(slide: Slide, x: float, y: float, tag: str, *, fill: Colo
     run = p.runs[0]
     run.font.size = Pt(7)
     run.font.bold = True
-    run.font.name = "Calibri"
+    run.font.name = FONT_UI
     run.font.color.rgb = RGBColor(255, 255, 255)
     return circle

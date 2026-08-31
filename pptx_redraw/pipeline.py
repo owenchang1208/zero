@@ -289,13 +289,13 @@ def generate_pptx(output_path: Path) -> Path:
         MSO_CONNECTOR.STRAIGHT, Inches(3.42), Inches(1.55), Inches(3.68), Inches(1.55)
     )
     c1.line.color.rgb = RGBColor(ACCENT.r, ACCENT.g, ACCENT.b)
-    c1.line.width = Inches(0.01)
+    c1.line.width = Pt(0.75)
 
     c2 = slide.shapes.add_connector(
         MSO_CONNECTOR.STRAIGHT, Inches(9.56), Inches(2.6), Inches(9.73), Inches(2.6)
     )
     c2.line.color.rgb = RGBColor(ACCENT.r, ACCENT.g, ACCENT.b)
-    c2.line.width = Inches(0.01)
+    c2.line.width = Pt(0.75)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     prs.save(str(output_path))

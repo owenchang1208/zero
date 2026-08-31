@@ -38,3 +38,6 @@ GOOD = Color(46, 125, 50)
 PURPLE = Color(124, 58, 237)
 ORANGE = Color(234, 88, 12)
 TEAL = Color(13, 148, 136)
+
+FONT_CJK = "Microsoft JhengHei"
+FONT_UI = "Calibri"
