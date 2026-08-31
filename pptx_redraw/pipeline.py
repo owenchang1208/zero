@@ -7,8 +7,7 @@ from pathlib import Path
 from pptx import Presentation
 from pptx.dml.color import RGBColor
 from pptx.enum.shapes import MSO_AUTO_SHAPE_TYPE, MSO_CONNECTOR
-from pptx.util import Inches
-from pptx.util import Pt
+from pptx.util import Inches, Pt
 
 from pptx_redraw.models import ObjectiveItem, RoadmapQuarter, SectionCard, SlideContent
 from pptx_redraw.renderer import add_card, add_objective_icon, add_round_rect, add_textbox
@@ -26,6 +25,22 @@ from pptx_redraw.theme import (
     TEXT,
     TITLE,
 )
+
+
+def _rgb(color) -> RGBColor:
+    """Convert theme color to RGBColor.
+
+    Args:
+        color: Theme color object with r/g/b channels.
+
+    Returns:
+        Converted RGBColor.
+
+    Raises:
+        ValueError: Not raised by this converter.
+    """
+
+    return RGBColor(color.r, color.g, color.b)
 
 
 def build_content() -> SlideContent:
@@ -175,7 +190,7 @@ def generate_pptx(output_path: Path) -> Path:
 
     bg = slide.background
     bg.fill.solid()
-    bg.fill.fore_color.rgb = RGBColor(BG.r, BG.g, BG.b)
+    bg.fill.fore_color.rgb = _rgb(BG)
 
     add_textbox(slide, 0.3, 0.1, 7.8, 0.35, content.title, size=20, bold=True, color=TITLE)
     add_textbox(slide, 0.3, 0.42, 5.8, 0.22, content.subtitle, size=11, color=MUTED)
@@ -269,7 +284,7 @@ def generate_pptx(output_path: Path) -> Path:
                 Inches(0.16),
             )
             arr.fill.solid()
-            arr.fill.fore_color.rgb = RGBColor(ACCENT.r, ACCENT.g, ACCENT.b)
+            arr.fill.fore_color.rgb = _rgb(ACCENT)
             arr.line.fill.background()
 
     add_round_rect(slide, 0.3, 6.5, 12.7, 0.78, fill=PANEL, line=BORDER)
@@ -288,13 +303,13 @@ def generate_pptx(output_path: Path) -> Path:
     c1 = slide.shapes.add_connector(
         MSO_CONNECTOR.STRAIGHT, Inches(3.42), Inches(1.55), Inches(3.68), Inches(1.55)
     )
-    c1.line.color.rgb = RGBColor(ACCENT.r, ACCENT.g, ACCENT.b)
+    c1.line.color.rgb = _rgb(ACCENT)
     c1.line.width = Pt(0.75)
 
     c2 = slide.shapes.add_connector(
         MSO_CONNECTOR.STRAIGHT, Inches(9.56), Inches(2.6), Inches(9.73), Inches(2.6)
     )
-    c2.line.color.rgb = RGBColor(ACCENT.r, ACCENT.g, ACCENT.b)
+    c2.line.color.rgb = _rgb(ACCENT)
     c2.line.width = Pt(0.75)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)

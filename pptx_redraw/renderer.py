@@ -78,6 +78,7 @@ def add_textbox(
     size: int = 12,
     bold: bool = False,
     color: Color = TEXT,
+    font_name: str = FONT_CJK,
     align: PP_ALIGN = PP_ALIGN.LEFT,
 ):
     """Add editable text box.
@@ -92,6 +93,7 @@ def add_textbox(
         size: Font size in points.
         bold: Font bold flag.
         color: Font color.
+        font_name: Font family name.
         align: Paragraph alignment.
 
     Returns:
@@ -112,7 +114,7 @@ def add_textbox(
     run.font.size = Pt(size)
     run.font.bold = bold
     run.font.color.rgb = _rgb(color)
-    run.font.name = FONT_CJK
+    run.font.name = font_name
     return tb
 
 
